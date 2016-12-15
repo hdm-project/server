@@ -30,12 +30,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hdm-project/networking.git"
+    "url": "git+https://github.com/hdm-project/server.git"
   },
   "author": "H3rby7",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hdm-project/networking/issues"
+    "url": "https://github.com/hdm-project/server/issues"
   },
-  "homepage": "https://github.com/hdm-project/networking"
+  "homepage": "https://github.com/hdm-project/server"
 }
