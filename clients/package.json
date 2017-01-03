@@ -5,9 +5,9 @@
   "main": "src/client.js",
   "dependencies": {
     "budo": "^9.2.1",
-    "choo": "^3.3.0",
-    "sheetify": "^6.0.1",
-    "peer-star": "git://github.com/hdm-project/networking.git"
+    "choo": "^4.0.3",
+    "peer-star": "git://github.com/hdm-project/networking.git",
+    "sheetify": "^6.0.1"
   },
   "standard": {
     "ignore": [

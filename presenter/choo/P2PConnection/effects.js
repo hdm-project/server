@@ -1,7 +1,7 @@
 const ps = require('peer-star')
 
 module.exports = globalConfig => ({
-  createStar: (group, state, send, done) => {
+  createStar: (state, group, send, done) => {
     var opts = {
       hubURL: globalConfig.hub,
       GID: group,

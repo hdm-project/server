@@ -1,7 +1,7 @@
 const ps = require('peer-star')
 
 module.exports = globalConfig => ({
-  joinStar: (group, state, send, done) => {
+  joinStar: (state, group, send, done) => {
     var opts = {
       hubURL: globalConfig.hub,
       GID: group,
@@ -17,5 +17,12 @@ module.exports = globalConfig => ({
       console.log('disconnected from a peer:', id)
       console.log('total peers:', state.star.peers.length)
     })
+  },
+  stop: (state, _, send, done) => {
+    if (state.star) {
+      state.star.close(function () {
+        console.log('closed')
+      })
+    }
   }
 })

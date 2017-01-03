@@ -8,7 +8,7 @@ var globalConfig = {
 app.model(require('./choo/P2PConnection')(globalConfig))
 
 // creates routing, default route = /404
-app.router('/404', require('./choo/routing')(globalConfig))
+app.router({ default: '/404' }, require('./choo/routing')(globalConfig))
 
 const appTree = app.start({hash: true})
 
