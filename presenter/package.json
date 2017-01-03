@@ -1,5 +1,5 @@
 {
-  "name": "networking",
+  "name": "presenter",
   "version": "0.0.1",
   "description": "network",
   "main": "src/client.js",
@@ -7,10 +7,7 @@
     "budo": "^9.2.1",
     "choo": "^3.3.0",
     "sheetify": "^6.0.1",
-    "simple-peer": "^6.1.0",
-    "socket.io": "^1.7.1",
-    "signalhub": "^4.8.0",
-    "webrtc-swarm": "^2.8.0"
+    "peer-star": "git://github.com/hdm-project/networking.git/#9b708f0e3ad998215342fc381ecef166c87dff7d"
   },
   "standard": {
     "ignore": [
