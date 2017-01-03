@@ -1,1 +1,12 @@
 /* Client Specific */
+
+.login_cancel {
+    width: 120px;
+    padding: 0.5em 0;
+    background-color: #bb6666;
+}
+
+.login_loading {
+    width: 100px;
+    margin: 0 auto;
+}

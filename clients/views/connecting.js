@@ -11,14 +11,20 @@ module.exports = function (globalConfig) {
     }
 
     return html`
-<div>
-    <div class="row">
-        <h1>Welcome!</h1>
+<div id="login">
+  <div class="center">
+    <div class="login_window">
+      <div class="row">
+          <h1>Connecting...</h1>
+      </div>
+      <div class="row">
+          <img src="../imgs/load.gif" alt="loading" class="login_loading">
+      </div>
+      <div class="row">
+        <button class="login_cancel" onclick=${cancel}>Cancel</button>
+      </div>
     </div>
-    <div class="row">
-        Connecting...
-        <button onclick=${cancel}>Cancel</button>
-    </div>
+  </div>
 </div>
 `
     function cancel(event) {
