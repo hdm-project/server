@@ -2,4 +2,5 @@
 
 
 # Contents
-Contains Presenter and Client Prototype to run the Robot Game
+Contains Presenter and Client Prototype to run the Robot Game  
+Check out the [Wiki](https://github.com/hdm-project/server/wiki)
