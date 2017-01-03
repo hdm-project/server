@@ -3,6 +3,7 @@ module.exports = globalConfig => ({
   effects: require('./effects')(globalConfig),
   reducers: require('./reducers')(globalConfig),
   state: {
-    star: null
+    star: null,
+    clients: {}
   }
 })

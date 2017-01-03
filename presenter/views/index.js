@@ -27,6 +27,7 @@ module.exports = function (globalConfig) {
       var group = document.getElementById('gid').value
       if (group) {
         send('p2p:createStar', group)
+        send('location:set', '/dashboard')
       }
     }
 

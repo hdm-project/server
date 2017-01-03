@@ -10,12 +10,11 @@ module.exports = globalConfig => ({
     state.star = ps(opts)
 
     state.star.on('peer', (peer, id) => {
-      console.log('connected to a new peer:', id)
-      console.log('total peers:', state.star.peers.length)
+      send('p2p:clientAdded', {peer: peer, id: id}, (err, res) => {})
     })
     state.star.on('disconnect', (peer, id) => {
-      console.log('disconnected from a peer:', id)
-      console.log('total peers:', state.star.peers.length)
+      send('p2p:clientLeft', {peer: peer, id: id}, (err, res) => {})
     })
+    done()
   }
 })
