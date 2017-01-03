@@ -2,8 +2,10 @@ const choo = require('choo')
 const app = choo()
 
 var globalConfig = {
-  signalhubUrl: 'http://localhost:8042'
+  hub: 'http://localhost:8042'
 }
+
+app.model(require('./choo/P2PConnection')(globalConfig))
 
 // creates routing, default route = /404
 app.router('/404', require('./choo/routing')(globalConfig))

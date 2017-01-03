@@ -7,7 +7,7 @@
     "budo": "^9.2.1",
     "choo": "^3.3.0",
     "sheetify": "^6.0.1",
-    "peer-star": "git://github.com/hdm-project/networking.git/#9b708f0e3ad998215342fc381ecef166c87dff7d"
+    "peer-star": "git://github.com/hdm-project/networking.git"
   },
   "standard": {
     "ignore": [

@@ -2,8 +2,7 @@ const choo = require('choo')
 const app = choo()
 
 var globalConfig = {
-  signalhubUrl: 'http://localhost:8042',
-  appName: 'presenter'
+  hub: 'http://localhost:8042'
 }
 
 app.model(require('./choo/P2PConnection')(globalConfig))

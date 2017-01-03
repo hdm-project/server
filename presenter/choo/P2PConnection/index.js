@@ -1,11 +1,8 @@
 module.exports = globalConfig => ({
-  namespace: 'connection',
+  namespace: 'p2p',
   effects: require('./effects')(globalConfig),
   reducers: require('./reducers')(globalConfig),
   state: {
-    connectionId: null,
-    ownId: null,
-    hub: null,
-    swarm: null
+    star: null
   }
 })

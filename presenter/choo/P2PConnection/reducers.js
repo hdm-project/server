@@ -1,9 +1,9 @@
 module.exports = globalConfig => ({
-  setConnectionId: (id, state) => {
+  func1: (id, state) => {
     state.connectionId = id
     return state
   },
-  setOwnId: (id, state) => {
+  func2: (id, state) => {
     state.ownId = id
     return state
   }
