@@ -3,21 +3,31 @@ const cuid = require('cuid')
 // const sf = require('sheetify')
 // sf('css/game.css', {global: true})
 
+
 module.exports = function (globalConfig) {
   return function (state, prev, send) {
-
-    if (!state.connection.connectionId) {
-      send('connection:setConnectionId', cuid())
-      send('connection:awaitPeer', state.connection.connectionId)
-    }
-
     return html`
 <div>
     <div class="row">
-        <h1>Realtime communication with WebRTC</h1>
-        <p>Client</p>
+        <h1>Welcome!</h1>
+    </div>
+    <div class="row">
+        <div class="row">
+            To continue please enter the name of the group you would like to join
+        </div>
+        <div class="row">
+            <input type="text" id="gid" name="gid">
+        </div>
+        <button onclick=${start}>Start</button>
     </div>
 </div>
 `
+    function start(event) {
+      var group = document.getElementById('gid').value
+      if (group) {
+        send('p2p:joinStar', group)
+      }
+    }
+
   }
 }
