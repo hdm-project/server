@@ -7,19 +7,19 @@ const cuid = require('cuid')
 module.exports = function (globalConfig) {
   return function (state, prev, send) {
     return html`
-<div>
-    <div class="row">
-        <h1>Welcome!</h1>
+<div id="login">
+  <div class="center">
+    <div class="login_window">
+      <div class="row">
+          <h1>Welcome!</h1>
+      </div>
+      <p>To continue please enter the name of the group you would like to join</p>
+      <div class="row">
+          <input type="text" id="gid" name="gid">
+      </div>
+      <button class="login_start" onclick=${start}>Start</button>
     </div>
-    <div class="row">
-        <div class="row">
-            To continue please enter the name of the group you would like to join
-        </div>
-        <div class="row">
-            <input type="text" id="gid" name="gid">
-        </div>
-        <button onclick=${start}>Start</button>
-    </div>
+  </div>
 </div>
 `
     function start(event) {

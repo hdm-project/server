@@ -7,20 +7,20 @@ const cuid = require('cuid')
 module.exports = function (globalConfig) {
   return function (state, prev, send) {
     return html`
-<div>
-    <div class="row">
-        <h1>Welcome!</h1>
+<div id="login">
+  <div class="center">
+    <div class="login_window">
+      <div class="row">
+          <h1>Welcome!</h1>
+      </div>
+      <p>To continue please enter a rather unique name for your group or create one</p>
+      <div class="row">
+          <input type="text" id="gid" name="gid" class="enter_id">
+          <button class="random_id" onclick=${generateRandom}>Generate Name</button>
+      </div>
+      <button class="login_start" onclick=${start}>Start</button>
     </div>
-    <div class="row">
-        <div class="row">
-            To continue please enter a rather unique name for your group or create one
-        </div>
-        <div class="row">
-            <input type="text" id="gid" name="gid">
-            <button onclick=${generateRandom}>Generate Name</button>
-        </div>
-        <button onclick=${start}>Start</button>
-    </div>
+  </div>
 </div>
 `
     function start(event) {
