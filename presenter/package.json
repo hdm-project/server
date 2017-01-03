@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "budo": "^9.2.1",
+    "signalhub": "^4.8.0",
     "standard": "^8.5.0"
   },
   "scripts": {
