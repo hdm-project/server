@@ -15,7 +15,7 @@ module.exports = function (globalConfig) {
       </div>
       <p>To continue please enter the name of the group you would like to join</p>
       <div class="row">
-          <input type="text" id="gid" name="gid">
+          <input type="text" id="gid" name="gid" class="enter_id">
       </div>
       <button class="login_start" onclick=${start}>Start</button>
     </div>
