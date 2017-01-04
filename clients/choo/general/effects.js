@@ -3,7 +3,7 @@ module.exports = globalConfig => ({
   setUsername:  setUsername,
   sendCode: sendCode,
   saveLocally: saveLocally(globalConfig),
-  cleanLocalStorage: cleanLocalStorage(globalConfig),
+  cleanExit: cleanExit(globalConfig),
   checkForPreviousSession: checkForPreviousSession(globalConfig),
   recover: recover
 })
@@ -64,10 +64,12 @@ function saveLocally(globalConfig) {
   }
 }
 
-function cleanLocalStorage(globalConfig) {
+function cleanExit(globalConfig) {
   return inner
   function inner(_, __, send, done) {
-    delete window.localStorage[globalConfig.storagePrefix]
+    delete localStorage[globalConfig.storagePrefix]
+    send('denyRecovery', null, (err, res) => {})
+    send('location:set', '/', (err, res) => {})
     done()
   }
 }

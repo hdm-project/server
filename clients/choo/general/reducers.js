@@ -28,7 +28,7 @@ function suggestRecovery(state, storageData) {
   state.group = storageData.group
   state.code = storageData.code
   state.recoveryPossible = true
-  console.log('suggesting recovery')
+  console.log('suggesting recovery for: ' + storageData.group + ' as ' + storageData.username + ' with id ' + storageData.id)
   return state
 }
 

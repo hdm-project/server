@@ -13,7 +13,7 @@ module.exports = function (globalConfig) {
         <h1>Welcome ${state.username}!</h1>
     </div>
     <div class="row">
-        <textarea name="code" id="code"></textarea>
+        <textarea name="code" id="code">${state.code ? state.code : ''}</textarea>
         <button onclick=${sendCode}>send as code</button>
     </div>
     <div class="row">
@@ -31,8 +31,7 @@ module.exports = function (globalConfig) {
     
     function cleanExit(event) {
       event.preventDefault()
-      send('cleanLocalStorage', null)
-      send('location:set', '/')
+      send('cleanExit', null)
     }
 
   }
