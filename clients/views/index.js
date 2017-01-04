@@ -15,7 +15,7 @@ module.exports = function (globalConfig) {
       </div>
       <p>To continue please enter the name of the group you would like to join</p>
       <div class="row">
-          <input type="text" id="gid" name="gid" class="enter_id">
+          <input type="text" id="gid" name="gid" class="enter_id" autofocus="autofocus">
           <button class="login_start" onclick=${start}>Start</button>
       </div>
     </div>
@@ -23,6 +23,7 @@ module.exports = function (globalConfig) {
 </div>
 `
     function start(event) {
+      event.preventDefault()
       var group = document.getElementById('gid').value
       if (group) {
         send('p2p:joinStar', group)

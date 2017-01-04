@@ -14,12 +14,13 @@ module.exports = function (globalConfig) {
 
     if (!state.p2p.star || state.p2p.star.closed) {
       send('location:set', '/')
+      return html`<div></div>`
     }
 
     return html`
 <div>
     <div class="row">
-        <h1>Board of Dashiness!</h1>
+        <h1>Board of Dashiness! ${state.p2p.star.GID}</h1>
     </div>
     <div class="row">
     <ul>

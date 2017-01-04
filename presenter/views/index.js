@@ -14,16 +14,19 @@ module.exports = function (globalConfig) {
           <h1>Welcome!</h1>
       </div>
       <p>To continue please enter a rather unique name for your group or create one</p>
-      <div class="row">
-          <input type="text" id="gid" name="gid" class="enter_id">
-          <button class="random_id" onclick=${generateRandom}>Generate Name</button>
-      </div>
-      <button class="login_start" onclick=${start}>Start</button>
+      
+        <div class="row">
+            <input type="text" id="gid" name="gid" class="enter_id" autofocus="autofocus">
+            <button class="random_id" onclick=${generateRandom}>Generate Name</button>
+        </div>
+        <button class="login_start" value="Start" onclick=${start}>Start</button>
+      
     </div>
   </div>
 </div>
 `
     function start(event) {
+      event.preventDefault()
       var group = document.getElementById('gid').value
       if (group) {
         send('p2p:createStar', group)

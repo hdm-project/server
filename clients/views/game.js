@@ -13,7 +13,7 @@ module.exports = function (globalConfig) {
     return html`
 <div>
     <div class="row">
-        <h1>Welcome!</h1>
+        <h1>Welcome ${state.p2p.username}!</h1>
     </div>
     <div class="row">
         Game Thingies
