@@ -2,7 +2,8 @@ const choo = require('choo')
 const app = choo()
 
 var globalConfig = {
-  hub: 'http://localhost:8042'
+  hub: 'http://localhost:8042',
+  storagePrefix: 'disrobia'
 }
 
 app.model(require('./choo/P2PConnection')(globalConfig))

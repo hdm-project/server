@@ -1,7 +1,8 @@
 module.exports = globalConfig => ({
   messageIncoming: messageIncoming,
   setUsername:  setUsername,
-  sendCode: sendCode
+  sendCode: sendCode,
+  saveLocally: saveLocally(globalConfig)
 })
 
 function messageIncoming(state, data, send, done) {
@@ -42,4 +43,17 @@ function sendCode(state, code, send, done) {
   }
   send('p2p:send', data, (err, res) => {})
   done()
+}
+
+function saveLocally(globalConfig) {
+  return inner
+  function inner(state, _, send, done) {
+    var obj = {}
+    obj.id = state.id
+    obj.username = state.username
+    obj.group = state.group
+    obj.code = state.code
+    window.localStorage[globalConfig.storagePrefix] = obj
+    done()
+  }
 }

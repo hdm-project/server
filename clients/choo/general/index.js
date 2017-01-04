@@ -6,6 +6,7 @@ module.exports = globalConfig => ({
     username: '',
     group: null,
     id: null,
-    connected: false
+    connected: false,
+    code: null
   }
 })
