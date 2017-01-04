@@ -3,6 +3,7 @@ module.exports = globalConfig => ({
   setUsername:  setUsername,
   sendCode: sendCode,
   saveLocally: saveLocally(globalConfig),
+  cleanLocalStorage: cleanLocalStorage(globalConfig),
   checkForPreviousSession: checkForPreviousSession(globalConfig),
   recover: recover
 })
@@ -18,7 +19,7 @@ function setUsername(state, name, send, done) {
   if (!name) {
     name = state.username
   }
-  if (name.length === 0) {
+  if (!name || name.length === 0) {
     return done()
   }
   send('updateUsername', name, (err, res) => {})
@@ -35,6 +36,8 @@ function setUsername(state, name, send, done) {
 }
 
 function sendCode(state, code, send, done) {
+  //TODO: remove, testing purpose!!
+  state.code = code
   if (!state.connected) {
     console.log('did not publish code')
     return done()
@@ -50,29 +53,41 @@ function sendCode(state, code, send, done) {
 function saveLocally(globalConfig) {
   return inner
   function inner(state, _, send, done) {
+    console.log('saving to: localStorage.' + globalConfig.storagePrefix)
     var obj = {}
     obj.id = state.id
     obj.username = state.username
     obj.group = state.group
     obj.code = state.code
-    window.localStorage[globalConfig.storagePrefix] = JSON.stringify(obj)
+    localStorage[globalConfig.storagePrefix] = JSON.stringify(obj)
+    done()
+  }
+}
+
+function cleanLocalStorage(globalConfig) {
+  return inner
+  function inner(_, __, send, done) {
+    delete window.localStorage[globalConfig.storagePrefix]
     done()
   }
 }
 
 function checkForPreviousSession(globalConfig) {
-  console.log(globalConfig)
   return inner
   function inner(_, __, send, done) {
     console.log('checking for previous session at: localStorage.' + globalConfig.storagePrefix)
-    var obj
+    var obj = localStorage[globalConfig.storagePrefix]
+    if (!obj) {
+      console.log('nothing found')
+      return done()
+    }
     try {
-      obj = JSON.parse(localStorage[globalConfig.storagePrefix])
+      obj = JSON.parse(obj)
     } catch (err) {
       console.log('error parsing localStorage')
+      return done()
     }
-    if (!obj) return done()
-    if (!obj.hasOwnProperty('id') || !obj.hasOwnProperty('group') || !obj.hasOwnProperty('username')) return done()
+    if (!obj.id || !obj.group || !obj.username) return done()
     send('suggestRecovery', obj, (err, res) => {})
     done()
   }
@@ -84,8 +99,7 @@ function recover(state, _, send, done) {
     GID: state.group,
     CID: state.id
   }
-  send('p2p:joinStar', opts, (err, res) => {
-    console.log(err)
-    console.log(res)
-  })
+  send('p2p:joinStar', opts, (err, res) => {})
+  send('location:set', '/connecting', (err, res) => {})
+  done()
 }

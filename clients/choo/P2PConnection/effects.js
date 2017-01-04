@@ -36,11 +36,12 @@ function joinStar(globalConfig) {
     }
     var opts = {
       hubURL: globalConfig.hub,
-      GID: options.group,
-      CID: options.id,
+      GID: options.GID,
+      CID: options.CID,
       isMain: false
     }
     state.star = ps(opts)
+    send('connecting', {GID: state.star.GID, CID: state.star.CID}, (err, res) => {})
 
     state.star.on('peer', (peer, id) => {
       console.log('connected to a new peer:', id)

@@ -10,7 +10,11 @@ module.exports = function (globalConfig) {
     }
 
     if (state.p2p.star && !state.p2p.star.closed && state.p2p.star.peers.length > 0) {
-      send('location:set', '/choseUsername')
+      if (!state.username) {
+        send('location:set', '/choseUsername')
+      } else {
+        send('location:set', '/game')
+      }
     }
 
       return html`

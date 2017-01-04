@@ -18,7 +18,7 @@ module.exports = function (globalConfig) {
           <h1>Enter a Name</h1>
       </div>
       <div class="row">
-          <input type="text" id="username" name="username" class="enter_id" value="${state.username}" autofocus="autofocus" >
+          <input type="text" id="username" name="username" class="enter_id" value="${state.username ? state.username : ''}" autofocus="autofocus" >
           <button class="login_start" onclick=${publishName}>Confirm</button>
       </div>
     </div>

@@ -1,7 +1,4 @@
 const html = require('choo/html')
-// const sf = require('sheetify')
-// sf('css/game.css', {global: true})
-
 
 module.exports = function (globalConfig) {
   return function (state, prev, send) {
@@ -19,6 +16,9 @@ module.exports = function (globalConfig) {
         <textarea name="code" id="code"></textarea>
         <button onclick=${sendCode}>send as code</button>
     </div>
+    <div class="row">
+        <button onclick=${cleanExit}>clean Exit</button>
+    </div>
 </div>
 `
 
@@ -27,6 +27,12 @@ module.exports = function (globalConfig) {
       event.preventDefault()
       if (!code || code.length === 0) return
       send('sendCode', code)
+    }
+    
+    function cleanExit(event) {
+      event.preventDefault()
+      send('cleanLocalStorage', null)
+      send('location:set', '/')
     }
 
   }
