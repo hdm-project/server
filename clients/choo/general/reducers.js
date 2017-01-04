@@ -1,7 +1,8 @@
 module.exports = globalConfig => ({
   updateUsername: updateUsername,
   isConnected: isConnected,
-  loadLocal: loadLocal(globalConfig)
+  suggestRecovery: suggestRecovery,
+  denyRecovery: denyRecovery
 })
 
 function isConnected(state, isConnected) {
@@ -14,13 +15,17 @@ function updateUsername(state, name) {
   return state
 }
 
-function loadLocal(globalConfig) {
-  return inner
-  function inner(state, name) {
-    var obj = window.localStorage[globalConfig.storagePrefix]
-    state.id = obj.id
-    state.username = obj.username
-    state.group = obj.group
-    state.code = obj.code
-  }
+function suggestRecovery(state, storageData) {
+  state.id = storageData.id
+  state.username = storageData.username
+  state.group = storageData.group
+  state.code = storageData.code
+  state.recoveryPossible = true
+  console.log('suggesting recovery')
+  return state
+}
+
+function denyRecovery(state, _) {
+  state.recoveryPossible = false
+  return state
 }

@@ -15,13 +15,13 @@ function send(state, data, send, done) {
   done()
 }
 
-function stop(state, nextGroup, send, done) {
+function stop(state, nextOptions, send, done) {
   if (state.star) {
     state.star.close(function () {
       console.log('closed star')
       state.star = null
-      if (nextGroup) {
-        send('p2p:joinStar', nextGroup)
+      if (nextOptions) {
+        send('p2p:joinStar', nextOptions)
       }
     })
   }
@@ -30,13 +30,14 @@ function stop(state, nextGroup, send, done) {
 
 function joinStar(globalConfig) {
   return inner
-  function inner(state, group, send, done) {
+  function inner(state, options, send, done) {
     if (state.star) {
-      send('p2p:stop', group)
+      send('p2p:stop', options)
     }
     var opts = {
       hubURL: globalConfig.hub,
-      GID: group,
+      GID: options.group,
+      CID: options.id,
       isMain: false
     }
     state.star = ps(opts)

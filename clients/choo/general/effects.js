@@ -2,7 +2,9 @@ module.exports = globalConfig => ({
   messageIncoming: messageIncoming,
   setUsername:  setUsername,
   sendCode: sendCode,
-  saveLocally: saveLocally(globalConfig)
+  saveLocally: saveLocally(globalConfig),
+  checkForPreviousSession: checkForPreviousSession(globalConfig),
+  recover: recover
 })
 
 function messageIncoming(state, data, send, done) {
@@ -53,7 +55,37 @@ function saveLocally(globalConfig) {
     obj.username = state.username
     obj.group = state.group
     obj.code = state.code
-    window.localStorage[globalConfig.storagePrefix] = obj
+    window.localStorage[globalConfig.storagePrefix] = JSON.stringify(obj)
     done()
   }
+}
+
+function checkForPreviousSession(globalConfig) {
+  console.log(globalConfig)
+  return inner
+  function inner(_, __, send, done) {
+    console.log('checking for previous session at: localStorage.' + globalConfig.storagePrefix)
+    var obj
+    try {
+      obj = JSON.parse(localStorage[globalConfig.storagePrefix])
+    } catch (err) {
+      console.log('error parsing localStorage')
+    }
+    if (!obj) return done()
+    if (!obj.hasOwnProperty('id') || !obj.hasOwnProperty('group') || !obj.hasOwnProperty('username')) return done()
+    send('suggestRecovery', obj, (err, res) => {})
+    done()
+  }
+}
+
+function recover(state, _, send, done) {
+  var opts
+  opts = {
+    GID: state.group,
+    CID: state.id
+  }
+  send('p2p:joinStar', opts, (err, res) => {
+    console.log(err)
+    console.log(res)
+  })
 }
