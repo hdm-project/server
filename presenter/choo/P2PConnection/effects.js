@@ -1,7 +1,9 @@
 const ps = require('peer-star')
 
 module.exports = globalConfig => ({
-  createStar: createStar(globalConfig)
+  createStar: createStar(globalConfig),
+  broadcast: broadcast,
+  sendTo: sendTo
 })
 
 function createStar(globalConfig) {
@@ -15,12 +17,12 @@ function createStar(globalConfig) {
     state.star = ps(opts)
 
     state.star.on('peer', (peer, id) => {
-      send('p2p:clientAdded', {peer: peer, id: id}, (err, res) => {})
+      send('clientAdded', {peer: peer, id: id}, (err, res) => {})
       addListenersToPeer(send, peer, id)
     })
     state.star.on('disconnect', (peer, id) => {
       peer.destroy()
-      send('p2p:clientLeft', {peer: peer, id: id}, (err, res) => {})
+      send('clientLeft', {peer: peer, id: id}, (err, res) => {})
     })
     done()
   }
@@ -44,7 +46,26 @@ function addListenersToPeer(send, peer, id) {
         id: id,
         name: decoded.data
       }
-      send('p2p:updateUsername', update, (err, res) => {})
+      send('updateUsername', update, (err, res) => {})
     }
   })
+}
+
+function broadcast(state, data, send, done) {
+  for (var p in state.star.peers) {
+    state.star.peers[p].send(JSON.stringify(data))
+  }
+  done()
+}
+
+function sendTo(state, msg, send, done) {
+  var recipient, content
+  recipient = state.star.contacts[msg.id]
+  content = msg.data
+  if (!recipient || state.star.peers.indexOf(msg.id) < 0) {
+    console.log(msg.id + ' peer not present')
+    return done()
+  }
+  recipient.send(content)
+  done()
 }

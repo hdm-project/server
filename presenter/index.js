@@ -6,6 +6,7 @@ var globalConfig = {
 }
 
 app.model(require('./choo/P2PConnection')(globalConfig))
+app.model(require('./choo/general')(globalConfig))
 
 // creates routing, default route = /404
 app.router({ default: '/404' }, require('./choo/routing')(globalConfig))

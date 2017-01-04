@@ -2,12 +2,6 @@ const html = require('choo/html')
 // const sf = require('sheetify')
 // sf('css/game.css', {global: true})
 
-function clientToLi(c) {
-  return html`
-    <li>${c.name + ' [' + c.id + ']'}</li>
-  `
-}
-
 module.exports = function (globalConfig) {
 
   return function (state, prev, send) {
@@ -24,10 +18,16 @@ module.exports = function (globalConfig) {
     </div>
     <div class="row">
     <ul>
-        ${state.p2p.clients.map(clientToLi)}
+        ${state.clientIds.map(clientToLi)}
     </ul>
     </div>
 </div>
 `
+    function clientToLi(c) {
+      return html`
+    <li>${state.clientNames[c] + ' [' + c + ']'}</li>
+  `
+    }
+
   }
 }

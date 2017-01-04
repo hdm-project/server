@@ -1,8 +1,10 @@
 module.exports = globalConfig => ({
-  namespace: 'p2p',
+  namespace: null,
   effects: require('./effects')(globalConfig),
   reducers: require('./reducers')(globalConfig),
   state: {
-    star: null
+    clientIds: [],
+    clientNames: {},
+    clientPeers: {}
   }
 })
