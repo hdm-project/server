@@ -13,7 +13,7 @@ module.exports = function (globalConfig) {
     return html`
 <div>
     <div class="row">
-        <h1>Welcome ${state.p2p.username}!</h1>
+        <h1>Welcome ${state.username}!</h1>
     </div>
     <div class="row">
         <textarea name="code" id="code"></textarea>
@@ -26,7 +26,7 @@ module.exports = function (globalConfig) {
       var code = document.getElementById('code').value
       event.preventDefault()
       if (!code || code.length === 0) return
-      send('p2p:sendCode', code)
+      send('sendCode', code)
     }
 
   }

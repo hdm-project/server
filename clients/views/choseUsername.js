@@ -18,7 +18,7 @@ module.exports = function (globalConfig) {
           <h1>Enter a Name</h1>
       </div>
       <div class="row">
-          <input type="text" id="username" name="username" class="enter_id" value="${retrieveCurrentUsername()}" autofocus="autofocus" >
+          <input type="text" id="username" name="username" class="enter_id" value="${state.username}" autofocus="autofocus" >
           <button class="login_start" onclick=${publishName}>Confirm</button>
       </div>
     </div>
@@ -30,14 +30,9 @@ module.exports = function (globalConfig) {
       event.preventDefault()
       var username = document.getElementById('username').value
       if (username.length > 0) {
-        send('p2p:setUsername', username)
+        send('setUsername', username)
         send('location:set', '/game')
       }
     }
-
-    function retrieveCurrentUsername() {
-      return state.p2p.username
-    }
-
   }
 }

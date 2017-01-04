@@ -1,40 +1,15 @@
 const ps = require('peer-star')
 
 module.exports = globalConfig => ({
-  setUsername:  setUsername,
   joinStar: joinStar(globalConfig),
   stop: stop,
-  sendCode: sendCode
+  send: send
 })
 
-function setUsername(state, name, send, done) {
-  if (!name) {
-    name = state.username
-  }
-  if (name.length === 0) {
-    return done()
-  }
-  send('p2p:updateUsername', name, (err, res) => {})
+function send(state, data, send, done) {
   if (!state.presenter) {
-    console.log('did not publish Username')
+    console.log('MAIN not available')
     return done()
-  }
-  var data = {
-    type: 'USERNAME',
-    data: name
-  }
-  state.presenter.send(JSON.stringify(data))
-  done()
-}
-
-function sendCode(state, code, send, done) {
-  if (!state.presenter) {
-    console.log('did not publish code')
-    return done()
-  }
-  var data = {
-    type: 'CODE',
-    data: code
   }
   state.presenter.send(JSON.stringify(data))
   done()
@@ -71,7 +46,8 @@ function joinStar(globalConfig) {
       console.log('total peers:', state.star.peers.length)
       if (id === 'MAIN') {
         send('p2p:setPresenterPeer', peer, (err, res) => {})
-        send('p2p:setUsername', null, (err, res) => {})
+        send('isConnected', true, (err, res) => {})
+        send('setUsername', null, (err, res) => {})
       }
     })
     state.star.on('disconnect', (peer, id) => {
@@ -79,6 +55,7 @@ function joinStar(globalConfig) {
       console.log('total peers:', state.star.peers.length)
       if (id === 'MAIN') {
         send('p2p:setPresenterPeer', null, (err, res) => {})
+        send('isConnected', false, (err, res) => {})
       }
     })
     done()
