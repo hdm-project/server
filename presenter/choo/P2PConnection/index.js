@@ -4,6 +4,6 @@ module.exports = globalConfig => ({
   reducers: require('./reducers')(globalConfig),
   state: {
     star: null,
-    clients: {}
+    clients: []
   }
 })

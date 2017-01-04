@@ -2,9 +2,9 @@ const html = require('choo/html')
 // const sf = require('sheetify')
 // sf('css/game.css', {global: true})
 
-function peerToLi(peer) {
+function clientToLi(c) {
   return html`
-    <li>${peer}</li>
+    <li>${c.name + ' [' + c.id + ']'}</li>
   `
 }
 
@@ -23,7 +23,7 @@ module.exports = function (globalConfig) {
     </div>
     <div class="row">
     <ul>
-        ${Object.keys(state.p2p.clients).map(peerToLi)}
+        ${state.p2p.clients.map(clientToLi)}
     </ul>
     </div>
 </div>
