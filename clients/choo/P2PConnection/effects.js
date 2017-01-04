@@ -3,7 +3,8 @@ const ps = require('peer-star')
 module.exports = globalConfig => ({
   setUsername:  setUsername,
   joinStar: joinStar(globalConfig),
-  stop: stop
+  stop: stop,
+  sendCode: sendCode
 })
 
 function setUsername(state, name, send, done) {
@@ -23,6 +24,20 @@ function setUsername(state, name, send, done) {
     data: name
   }
   state.presenter.send(JSON.stringify(data))
+  done()
+}
+
+function sendCode(state, code, send, done) {
+  if (!state.presenter) {
+    console.log('did not publish code')
+    return done()
+  }
+  var data = {
+    type: 'CODE',
+    data: code
+  }
+  state.presenter.send(JSON.stringify(data))
+  done()
 }
 
 function stop(state, nextGroup, send, done) {

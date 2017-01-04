@@ -16,9 +16,18 @@ module.exports = function (globalConfig) {
         <h1>Welcome ${state.p2p.username}!</h1>
     </div>
     <div class="row">
-        Game Thingies
+        <textarea name="code" id="code"></textarea>
+        <button onclick=${sendCode}>send as code</button>
     </div>
 </div>
 `
+
+    function sendCode(event) {
+      var code = document.getElementById('code').value
+      event.preventDefault()
+      if (!code || code.length === 0) return
+      send('p2p:sendCode', code)
+    }
+
   }
 }

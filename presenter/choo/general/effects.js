@@ -3,12 +3,16 @@ module.exports = globalConfig => ({
 })
 
 function messageIncoming(state, data, send, done) {
+  var update = {
+    id: data.id
+  }
   if (data.type === 'USERNAME' && data.content.length > 0) {
-    var update = {
-      id: data.id,
-      name: data.content
-    }
-    send('updateUsername', update, (err, res) => {})
+    update.name = data.content
+    return send('updateUsername', update, (err, res) => {})
+  }
+  if (data.type === 'CODE' && data.content.length > 0) {
+    update.code = data.content
+    return send('updateCode', update, (err, res) => {})
   }
   done()
 }

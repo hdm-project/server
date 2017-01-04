@@ -6,7 +6,8 @@ module.exports = globalConfig => ({
     clients: {
       ids: [],
       names: {},
-      peers: {}
+      peers: {},
+      code: {}
     }
   }
 })
