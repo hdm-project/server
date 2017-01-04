@@ -41,13 +41,11 @@ function addListenersToPeer(send, peer, id) {
       console.log(decoded)
       return
     }
-    if (decoded.type === 'USERNAME' && decoded.data.length > 0) {
-      var update = {
-        id: id,
-        name: decoded.data
-      }
-      send('updateUsername', update, (err, res) => {})
-    }
+    send('messageIncoming', {
+      id: id,
+      type: decoded.type,
+      content: decoded.data
+    }, (err, res) => {})
   })
 }
 

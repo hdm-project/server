@@ -3,8 +3,10 @@ module.exports = globalConfig => ({
   effects: require('./effects')(globalConfig),
   reducers: require('./reducers')(globalConfig),
   state: {
-    clientIds: [],
-    clientNames: {},
-    clientPeers: {}
+    clients: {
+      ids: [],
+      names: {},
+      peers: {}
+    }
   }
 })
