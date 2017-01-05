@@ -3,4 +3,10 @@
 
 # Contents
 Contains Presenter and Client Prototype to run the Robot Game  
-Check out the [Wiki](https://github.com/hdm-project/server/wiki)
+Check out the [Wiki](https://github.com/hdm-project/server/wiki) for some impressions
+
+# Useage
+`npm install` in both ./presenter and ./client
+The presenter features a local signalhub script - run with: `npm run devhub`
+Both Client and Presenter prototypes are launched via: `npm start` in their respective folders.
+Presenter uses port 8080, Client uses 8081
