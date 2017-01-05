@@ -34,9 +34,7 @@ function setUsername (state, name, send, done) {
     type: 'USERNAME',
     data: name
   }
-  send('p2p:send', data, (err, res) => {
-    if (err) done(err)
-  })
+  send('p2p:send', data, (err, res) => { if (err) done(err) })
   done()
 }
 
@@ -51,9 +49,7 @@ function sendCode (state, code, send, done) {
     type: 'CODE',
     data: code
   }
-  send('p2p:send', data, (err, res) => {
-    if (err) done(err)
-  })
+  send('p2p:send', data, (err, res) => { if (err) done(err) })
   done()
 }
 
@@ -78,19 +74,11 @@ function cleanExit (globalConfig) {
       type: 'QUIT',
       data: null
     }
-    send('p2p:send', data, (err, res) => {
-      if (err) done(err)
-    })
-    send('p2p:stop', null, (err, res) => {
-      if (err) done(err)
-    })
+    send('p2p:send', data, (err, res) => { if (err) done(err) })
+    send('p2p:stop', null, (err, res) => { if (err) done(err) })
     delete localStorage[globalConfig.storagePrefix] // eslint-disable-line
-    send('denyRecovery', null, (err, res) => {
-      if (err) done(err)
-    })
-    send('location:set', '/', (err, res) => {
-      if (err) done(err)
-    })
+    send('denyRecovery', null, (err, res) => { if (err) done(err) })
+    send('location:set', '/', (err, res) => { if (err) done(err) })
     done()
   }
 }
@@ -111,9 +99,7 @@ function checkForPreviousSession (globalConfig) {
       return done()
     }
     if (!obj.id || !obj.group || !obj.username) return done()
-    send('suggestRecovery', obj, (err, res) => {
-      if (err) done(err)
-    })
+    send('suggestRecovery', obj, (err, res) => { if (err) done(err) })
     done()
   }
 }
@@ -124,11 +110,7 @@ function recover (state, _, send, done) {
     GID: state.group,
     CID: state.id
   }
-  send('p2p:joinStar', opts, (err, res) => {
-    if (err) done(err)
-  })
-  send('location:set', '/connecting', (err, res) => {
-    if (err) done(err)
-  })
+  send('p2p:joinStar', opts, (err, res) => { if (err) done(err) })
+  send('location:set', '/connecting', (err, res) => { if (err) done(err) })
   done()
 }

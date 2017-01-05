@@ -23,9 +23,7 @@ function stop (state, nextOptions, send, done) {
       console.log('closed star')
       state.star = null
       if (nextOptions) {
-        send('p2p:joinStar', nextOptions, (err, res) => {
-          if (err) done(err)
-        })
+        send('p2p:joinStar', nextOptions, (err, res) => { if (err) done(err) })
       }
     })
   }
@@ -45,36 +43,22 @@ function joinStar (globalConfig) {
       isMain: false
     }
     state.star = ps(opts)
-    send('connecting', {GID: state.star.GID, CID: state.star.CID}, (err, res) => {
-      if (err) done(err)
-    })
+    send('connecting', {GID: state.star.GID, CID: state.star.CID}, (err, res) => { if (err) done(err) })
 
     state.star.on('peer', (peer, id) => {
       if (id === 'MAIN') {
         console.log('connected to MAIN')
-        send('p2p:setPresenterPeer', peer, (err, res) => {
-          if (err) done(err)
-        })
-        send('isConnected', true, (err, res) => {
-          if (err) done(err)
-        })
-        send('saveLocally', true, (err, res) => {
-          if (err) done(err)
-        })
-        send('setUsername', null, (err, res) => {
-          if (err) done(err)
-        })
+        send('p2p:setPresenterPeer', peer, (err, res) => { if (err) done(err) })
+        send('isConnected', true, (err, res) => { if (err) done(err) })
+        send('saveLocally', true, (err, res) => { if (err) done(err) })
+        send('setUsername', null, (err, res) => { if (err) done(err) })
       }
     })
     state.star.on('disconnect', (peer, id) => {
       if (id === 'MAIN') {
         console.log('disconnected from MAIN')
-        send('p2p:setPresenterPeer', null, (err, res) => {
-          if (err) done(err)
-        })
-        send('isConnected', false, (err, res) => {
-          if (err) done(err)
-        })
+        send('p2p:setPresenterPeer', null, (err, res) => { if (err) done(err) })
+        send('isConnected', false, (err, res) => { if (err) done(err) })
       }
     })
     done()
