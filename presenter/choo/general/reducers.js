@@ -1,18 +1,28 @@
 module.exports = globalConfig => ({
   clientAdded: addClient,
+  clientQuit: clientQuit,
   clientLeft: clientLeft,
   updateUsername: updateUsername,
   updateCode: updateCode(globalConfig)
 })
 
 function addClient(state, data) {
-  state.clients.ids.push(data.id)
+  if (state.clients.ids.indexOf(data.id) < 0) {
+    state.clients.ids.push(data.id)
+    state.clients.names[data.id] = 'unknown'
+  }
   state.clients.peers[data.id] = data.peer
-  state.clients.names[data.id] = 'unknown'
+  return state
+}
+
+function clientQuit(state, data) {
+  return removeClientByID(state, data.id)
 }
 
 function clientLeft(state, data) {
-  removeClientByID(state, data.id)
+  if (state.clients.ids.indexOf(data.id) < 0) return state
+  state.clients.peers[data.id] = null
+  return state
 }
 
 function removeClientByID(state, id) {
@@ -20,13 +30,18 @@ function removeClientByID(state, id) {
   if (i < 0) return
   state.clients.ids.splice(i, 1)
   delete state.clients.names[id]
-  state.clients.peers[id].destroy()
-  delete state.clients.peers[id]
+  if (state.clients.peers[id]) {
+    state.clients.peers[id].destroy()
+    delete state.clients.peers[id]
+  }
+  return state
 }
 
 function updateUsername(state, data) {
   state.clients.names[data.id] = data.name
+  return state
 }
+
 function updateCode(globalConfig) {
   return inner
   function inner(state, data) {
@@ -40,5 +55,6 @@ function updateCode(globalConfig) {
       state.clients.code[data.id] = codeArray.slice(0, globalConfig.MAX.codeHistory)
     }
     console.log(state.clients.code[data.id])
+    return state
   }
 }

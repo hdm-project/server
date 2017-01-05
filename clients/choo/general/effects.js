@@ -67,6 +67,12 @@ function saveLocally(globalConfig) {
 function cleanExit(globalConfig) {
   return inner
   function inner(_, __, send, done) {
+    var data = {
+      type: 'QUIT',
+      data: null
+    }
+    send('p2p:send', data, (err, res) => {})
+    send('p2p:stop', null, (err, res) => {})
     delete localStorage[globalConfig.storagePrefix]
     send('denyRecovery', null, (err, res) => {})
     send('location:set', '/', (err, res) => {})

@@ -16,7 +16,9 @@ function send(state, data, send, done) {
 }
 
 function stop(state, nextOptions, send, done) {
+  console.log('stopping?')
   if (state.star) {
+    console.log('star present')
     state.star.close(function () {
       console.log('closed star')
       state.star = null
@@ -44,18 +46,16 @@ function joinStar(globalConfig) {
     send('connecting', {GID: state.star.GID, CID: state.star.CID}, (err, res) => {})
 
     state.star.on('peer', (peer, id) => {
-      console.log('connected to a new peer:', id)
-      console.log('total peers:', state.star.peers.length)
       if (id === 'MAIN') {
+        console.log('connected to MAIN')
         send('p2p:setPresenterPeer', peer, (err, res) => {})
         send('isConnected', true, (err, res) => {})
         send('setUsername', null, (err, res) => {})
       }
     })
     state.star.on('disconnect', (peer, id) => {
-      console.log('disconnected from a peer:', id)
-      console.log('total peers:', state.star.peers.length)
       if (id === 'MAIN') {
+        console.log('disconnected from MAIN')
         send('p2p:setPresenterPeer', null, (err, res) => {})
         send('isConnected', false, (err, res) => {})
       }
