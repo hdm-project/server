@@ -4,7 +4,6 @@ const html = require('choo/html')
 
 module.exports = function (globalConfig) {
   return function (state, prev, send) {
-
     if (!state.p2p.star || state.p2p.star.closed || state.p2p.star.peers.length === 0) {
       send('location:set', '/')
       return html`<div></div>`
@@ -26,7 +25,7 @@ module.exports = function (globalConfig) {
 </div>
 `
 
-    function publishName(event) {
+    function publishName (event) {
       event.preventDefault()
       var username = document.getElementById('username').value
       if (username.length > 0) {

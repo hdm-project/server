@@ -6,9 +6,9 @@ module.exports = globalConfig => ({
   sendTo: sendTo
 })
 
-function createStar(globalConfig) {
+function createStar (globalConfig) {
   return inner
-  function inner(state, group, send, done) {
+  function inner (state, group, send, done) {
     var opts = {
       hubURL: globalConfig.hub,
       GID: group,
@@ -19,20 +19,28 @@ function createStar(globalConfig) {
     state.star.on('peer', (peer, id) => {
       console.log('connected to a new peer:', id)
       console.log('total peers:', state.star.peers.length)
-      send('clientAdded', {peer: peer, id: id}, (err, res) => {})
+      send('clientAdded', {peer: peer, id: id}, (err, res) => {
+        if (err) {
+          done(err)
+        }
+      })
       addListenersToPeer(send, peer, id)
     })
     state.star.on('disconnect', (peer, id) => {
       console.log('disconnected from a peer:', id)
       console.log('total peers:', state.star.peers.length)
       peer.destroy()
-      send('clientLeft', {peer: peer, id: id}, (err, res) => {})
+      send('clientLeft', {peer: peer, id: id}, (err, res) => {
+        if (err) {
+          done(err)
+        }
+      })
     })
     done()
   }
 }
 
-function addListenersToPeer(send, peer, id) {
+function addListenersToPeer (send, peer, id) {
   peer.on('data', function (data) {
     var decoded
     try {
@@ -49,18 +57,22 @@ function addListenersToPeer(send, peer, id) {
       id: id,
       type: decoded.type,
       content: decoded.data
-    }, (err, res) => {})
+    }, (err, res) => {
+      if (err) {
+        console.log(err)
+      }
+    })
   })
 }
 
-function broadcast(state, data, send, done) {
+function broadcast (state, data, send, done) {
   for (var p in state.star.peers) {
     state.star.peers[p].send(JSON.stringify(data))
   }
   done()
 }
 
-function sendTo(state, msg, send, done) {
+function sendTo (state, msg, send, done) {
   var recipient, content
   recipient = state.star.contacts[msg.id]
   content = msg.data

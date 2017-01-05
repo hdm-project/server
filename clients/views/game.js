@@ -2,7 +2,6 @@ const html = require('choo/html')
 
 module.exports = function (globalConfig) {
   return function (state, prev, send) {
-
     if (!state.p2p.star || state.p2p.star.closed) {
       send('location:set', '/')
     }
@@ -22,17 +21,16 @@ module.exports = function (globalConfig) {
 </div>
 `
 
-    function sendCode(event) {
+    function sendCode (event) {
       var code = document.getElementById('code').value
       event.preventDefault()
       if (!code || code.length === 0) return
       send('sendCode', code)
     }
-    
-    function cleanExit(event) {
+
+    function cleanExit (event) {
       event.preventDefault()
       send('cleanExit', null)
     }
-
   }
 }

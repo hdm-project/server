@@ -3,9 +3,7 @@ const html = require('choo/html')
 // sf('css/game.css', {global: true})
 
 module.exports = function (globalConfig) {
-
   return function (state, prev, send) {
-
     if (!state.p2p.star || state.p2p.star.closed) {
       send('location:set', '/')
       return html`<div></div>`
@@ -23,11 +21,10 @@ module.exports = function (globalConfig) {
     </div>
 </div>
 `
-    function clientToLi(c) {
+    function clientToLi (c) {
       return html`
     <li>${state.clients.names[c] + ' [' + c + ']'}</li>
   `
     }
-
   }
 }

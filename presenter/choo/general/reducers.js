@@ -6,7 +6,7 @@ module.exports = globalConfig => ({
   updateCode: updateCode(globalConfig)
 })
 
-function addClient(state, data) {
+function addClient (state, data) {
   if (state.clients.ids.indexOf(data.id) < 0) {
     state.clients.ids.push(data.id)
     state.clients.names[data.id] = 'unknown'
@@ -15,17 +15,17 @@ function addClient(state, data) {
   return state
 }
 
-function clientQuit(state, data) {
+function clientQuit (state, data) {
   return removeClientByID(state, data.id)
 }
 
-function clientLeft(state, data) {
+function clientLeft (state, data) {
   if (state.clients.ids.indexOf(data.id) < 0) return state
   state.clients.peers[data.id] = null
   return state
 }
 
-function removeClientByID(state, id) {
+function removeClientByID (state, id) {
   var i = state.clients.ids.indexOf(id)
   if (i < 0) return
   state.clients.ids.splice(i, 1)
@@ -37,14 +37,14 @@ function removeClientByID(state, id) {
   return state
 }
 
-function updateUsername(state, data) {
+function updateUsername (state, data) {
   state.clients.names[data.id] = data.name
   return state
 }
 
-function updateCode(globalConfig) {
+function updateCode (globalConfig) {
   return inner
-  function inner(state, data) {
+  function inner (state, data) {
     var codeArray
     if (!state.clients.code.hasOwnProperty(data.id)) {
       state.clients.code[data.id] = []

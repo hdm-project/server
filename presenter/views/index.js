@@ -25,7 +25,7 @@ module.exports = function (globalConfig) {
   </div>
 </div>
 `
-    function start(event) {
+    function start (event) {
       event.preventDefault()
       var group = document.getElementById('gid').value
       if (group) {
@@ -34,12 +34,11 @@ module.exports = function (globalConfig) {
       }
     }
 
-    function generateRandom(event) {
+    function generateRandom (event) {
       var group = cuid()
-      //extract client fingerprint
+      // extract client fingerprint
       group = group.slice(13, 17)
       document.getElementById('gid').value = group
     }
-
   }
 }

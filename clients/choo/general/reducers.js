@@ -6,23 +6,23 @@ module.exports = globalConfig => ({
   connecting: connecting
 })
 
-function connecting(state, info) {
+function connecting (state, info) {
   state.group = info.GID
   state.id = info.CID
   return state
 }
 
-function isConnected(state, isConnected) {
+function isConnected (state, isConnected) {
   state.connected = isConnected
   return state
 }
 
-function updateUsername(state, name) {
+function updateUsername (state, name) {
   state.username = name
   return state
 }
 
-function suggestRecovery(state, storageData) {
+function suggestRecovery (state, storageData) {
   state.id = storageData.id
   state.username = storageData.username
   state.group = storageData.group
@@ -32,7 +32,7 @@ function suggestRecovery(state, storageData) {
   return state
 }
 
-function denyRecovery(state, _) {
+function denyRecovery (state, _) {
   state.id = null
   state.username = null
   state.group = null

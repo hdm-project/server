@@ -2,7 +2,6 @@ const html = require('choo/html')
 
 module.exports = function (globalConfig) {
   return function (state, prev, send) {
-
     if (!state.p2p.star || state.p2p.star.closed) {
       send('location:set', '/')
     }
@@ -29,10 +28,9 @@ module.exports = function (globalConfig) {
 </div>
 `
 
-    function cancel(event) {
+    function cancel (event) {
       send('p2p:stop', null)
       send('location:set', '/')
     }
-
   }
 }

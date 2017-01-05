@@ -4,12 +4,11 @@ var checkedForRecovery = false
 
 module.exports = function (globalConfig) {
   return function (state, prev, send) {
-
     if (!checkedForRecovery) {
       checkedForRecovery = true
       send('checkForPreviousSession', null)
     }
-    
+
     if (state.recoveryPossible) {
       return html`
 <div id="login">
@@ -45,7 +44,7 @@ module.exports = function (globalConfig) {
   </div>
 </div>
 `
-    function start(event) {
+    function start (event) {
       event.preventDefault()
       var group = document.getElementById('gid').value
       if (group) {
@@ -57,15 +56,14 @@ module.exports = function (globalConfig) {
       }
     }
 
-    function startRecovery(event) {
+    function startRecovery (event) {
       event.preventDefault()
       send('recover', null)
     }
 
-    function denyRecovery(event) {
+    function denyRecovery (event) {
       event.preventDefault()
       send('denyRecovery', null)
     }
-    
   }
 }
