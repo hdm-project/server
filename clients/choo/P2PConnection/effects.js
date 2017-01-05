@@ -50,6 +50,7 @@ function joinStar(globalConfig) {
         console.log('connected to MAIN')
         send('p2p:setPresenterPeer', peer, (err, res) => {})
         send('isConnected', true, (err, res) => {})
+        send('saveLocally', true, (err, res) => {})
         send('setUsername', null, (err, res) => {})
       }
     })
