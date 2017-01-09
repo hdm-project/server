@@ -1,25 +1,31 @@
 module.exports = globalConfig => ({
   updateUsername: updateUsername,
-  isConnected: isConnected,
+  connectivityChange: connectivityChange(globalConfig),
   suggestRecovery: suggestRecovery,
   denyRecovery: denyRecovery,
-  connecting: connecting
+  activateRecovery: activateRecovery(globalConfig)
 })
 
-function connecting (state, info) {
-  state.group = info.GID
-  state.id = info.CID
-  return state
-}
-
-function isConnected (state, isConnected) {
-  state.connected = isConnected
-  return state
+function connectivityChange (globalConfig) {
+  return inner
+  function inner (state, info) {
+    state.group = info.GID
+    state.id = info.CID
+    state.connectivityState = info.state
+    return state
+  }
 }
 
 function updateUsername (state, name) {
   state.username = name
   return state
+}
+
+function activateRecovery(globalConfig) {
+  return inner
+  function inner(state, _) {
+    state.connectivityState = globalConfig.connectivityStates.recovering
+  }
 }
 
 function suggestRecovery (state, storageData) {

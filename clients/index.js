@@ -3,7 +3,14 @@ const app = choo()
 
 var globalConfig = {
   hub: 'http://localhost:8042',
-  storagePrefix: 'disrobia'
+  storagePrefix: 'disrobia',
+  connectivityStates: {
+    none: 0,
+    initialConnect: 1,
+    recovering: 2,
+    reconnecting: 3,
+    connected: 4
+  }
 }
 
 app.model(require('./choo/P2PConnection')(globalConfig))

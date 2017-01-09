@@ -1,11 +1,11 @@
 module.exports = globalConfig => ({
   messageIncoming: messageIncoming,
-  setUsername: setUsername,
-  sendCode: sendCode,
+  setUsername: setUsername(globalConfig),
+  sendCode: sendCode(globalConfig),
   saveLocally: saveLocally(globalConfig),
   cleanExit: cleanExit(globalConfig),
   checkForPreviousSession: checkForPreviousSession(globalConfig),
-  recover: recover
+  recover: recover(globalConfig)
 })
 
 function messageIncoming (state, data, send, done) {
@@ -16,41 +16,49 @@ function messageIncoming (state, data, send, done) {
   done()
 }
 
-function setUsername (state, name, send, done) {
-  if (!name) {
-    name = state.username
+function setUsername(globalConfig) {
+  return inner
+  function inner (state, name, send, done) {
+    if (!name) {
+      name = state.username
+    }
+    if (!name || name.length === 0) {
+      return done()
+    }
+    send('updateUsername', name, (err, res) => {
+      if (err) done(err)
+    })
+    if (state.connectivityState < globalConfig.connectivityStates.connected) {
+      console.log('did not publish Username, because we have no connection')
+      return done()
+    }
+    var data = {
+      type: 'USERNAME',
+      data: name
+    }
+    send('p2p:send', data, (err, res) => { if (err) done(err) })
+    done()
   }
-  if (!name || name.length === 0) {
-    return done()
-  }
-  send('updateUsername', name, (err, res) => {
-    if (err) done(err)
-  })
-  if (!state.connected) {
-    console.log('did not publish Username')
-    return done()
-  }
-  var data = {
-    type: 'USERNAME',
-    data: name
-  }
-  send('p2p:send', data, (err, res) => { if (err) done(err) })
-  done()
+
 }
 
-function sendCode (state, code, send, done) {
-  // TODO: remove, testing purpose!!
-  state.code = code
-  if (!state.connected) {
-    console.log('did not publish code')
-    return done()
+function sendCode(globalConfig) {
+  return inner
+  function inner (state, code, send, done) {
+    // TODO: remove, testing purpose!!
+    state.code = code
+    if (state.connectivityState < globalConfig.connectivityStates.connected) {
+      console.log('did not publish code, because no connection present')
+      return done()
+    }
+    var data = {
+      type: 'CODE',
+      data: code
+    }
+    send('p2p:send', data, (err, res) => { if (err) done(err) })
+    done()
   }
-  var data = {
-    type: 'CODE',
-    data: code
-  }
-  send('p2p:send', data, (err, res) => { if (err) done(err) })
-  done()
+  
 }
 
 function saveLocally (globalConfig) {
@@ -69,12 +77,14 @@ function saveLocally (globalConfig) {
 
 function cleanExit (globalConfig) {
   return inner
-  function inner (_, __, send, done) {
-    var data = {
-      type: 'QUIT',
-      data: null
+  function inner (state, __, send, done) {
+    if (state.connectivityState === globalConfig.connectivityStates.connected) {
+      var data = {
+        type: 'QUIT',
+        data: null
+      }
+      send('p2p:send', data, (err, res) => { if (err) done(err) })
     }
-    send('p2p:send', data, (err, res) => { if (err) done(err) })
     send('p2p:stop', null, (err, res) => { if (err) done(err) })
     delete localStorage[globalConfig.storagePrefix] // eslint-disable-line
     send('denyRecovery', null, (err, res) => { if (err) done(err) })
@@ -104,13 +114,18 @@ function checkForPreviousSession (globalConfig) {
   }
 }
 
-function recover (state, _, send, done) {
-  var opts
-  opts = {
-    GID: state.group,
-    CID: state.id
+function recover(globalConfig) {
+  return inner
+  function inner (state, _, send, done) {
+    var opts
+    opts = {
+      GID: state.group,
+      CID: state.id
+    }
+    send('p2p:joinStar', opts, (err, res) => { if (err) done(err) })
+    send('activateRecovery', null, (err, res) => {if (err) done(err) })
+    send('location:set', '/connecting', (err, res) => { if (err) done(err) })
+    done()
   }
-  send('p2p:joinStar', opts, (err, res) => { if (err) done(err) })
-  send('location:set', '/connecting', (err, res) => { if (err) done(err) })
-  done()
+
 }

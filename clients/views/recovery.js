@@ -2,11 +2,11 @@ const html = require('choo/html')
 
 module.exports = function (globalConfig) {
   return function (state, prev, send) {
-    if (!state.p2p.star || state.p2p.star.closed) {
+    if (state.connectivityState === globalConfig.connectivityStates.none) {
       send('location:set', '/')
     }
 
-    if (state.p2p.star && !state.p2p.star.closed && state.p2p.star.peers.length > 0) {
+    if (state.connectivityState === globalConfig.connectivityStates.connected) {
       send('location:set', '/choseUsername')
     }
 

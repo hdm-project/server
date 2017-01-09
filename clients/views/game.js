@@ -2,7 +2,7 @@ const html = require('choo/html')
 
 module.exports = function (globalConfig) {
   return function (state, prev, send) {
-    if (!state.p2p.star || state.p2p.star.closed) {
+    if (state.connectivityState === globalConfig.connectivityStates.none) {
       send('location:set', '/')
     }
 
